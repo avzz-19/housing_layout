@@ -1,0 +1,47 @@
+.App {
+  text-align: center;
+  background-color: '#A9E3E7';
+}
+.move-down-enter {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.move-down-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 300ms ease-in-out;
+}
+
+.move-down-exit {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.move-down-exit-active {
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all 300ms ease-in-out;
+}
+
+.move-up-enter {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.move-up-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 300ms ease-in-out;
+}
+
+.move-up-exit {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.move-up-exit-active {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 300ms ease-in-out;
+}
