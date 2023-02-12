@@ -9,11 +9,14 @@ function Home() {
   const [n, setN] = useState(0);
   const [product, setProduct] = useState(0);
   const [grid, setGrid] = useState([]);
-  const [addHome, setAddHome] = useState(Array(grid.length).fill(false));
+  const [addHome, setAddHome] = useState([]);
   const [cursorUrl, setCursorUrl] = React.useState("../Home_Icon.svg");
 
   useEffect(() => {
     let gridArray = [];
+    if (m !== 0 && n !== 0) {
+      setProduct(m * n);
+    }
     for (let i = 0; i < product; i++) {
       gridArray.push(
         <div
@@ -27,19 +30,29 @@ function Home() {
         </div>
       );
     }
-    setGrid(gridArray);
-
-    setAddHome(Array(gridArray.length).fill(false));
+    if (product > 0) setGrid(gridArray);
+    let matrix = [];
+    if (m > 0 && n > 0)
+      for (let i = 0; i < m; i++) {
+        let row = [];
+        for (let j = 0; j < n; j++) {
+          row.push(0);
+        }
+        matrix.push(row);
+      }
+    setAddHome(matrix);
   }, [product, m, n]);
 
-  const handleClick = (index) => {
-    const updatedAddHome = [...addHome];
-    updatedAddHome[index] = getIcon();
-    setAddHome(updatedAddHome);
+  const handleClick = (rowIndex, colIndex) => {
+    const icon = getFacility();
+    const updatedMatrix = [...addHome];
+    updatedMatrix[rowIndex][colIndex] = icon;
+    setAddHome(updatedMatrix);
   };
+
   console.log(addHome);
 
-  const getIcon = () => {
+  const getFacility = () => {
     switch (cursorUrl) {
       case "../Home_Icon.svg":
         return "Home";
@@ -51,24 +64,23 @@ function Home() {
         return "Gym";
 
       default:
-        return false;
+        return 0;
     }
   };
-  const getImgUrl = (index) => {
-    switch(addHome[index]) {
-      case 'Restaurant':
+  const getImgUrl = (row, col) => {
+    switch (addHome[row][col]) {
+      case "Restaurant":
         return "../Restaurant_Icon.svg";
-      case 'Hospital':
+      case "Hospital":
         return "../Hospital_Icon.svg";
-      case 'Gym':
+      case "Gym":
         return "../Gym_Icon.svg";
-      case 'Home':
+      case "Home":
         return "../Home_Icon.svg";
       default:
-        return false;
+        return null;
     }
   };
-  
 
   return (
     <Grid columns={!showButton ? [2, "1fr 3fr"] : 1}>
@@ -120,50 +132,53 @@ function Home() {
             <Grid columns={2} sx={{ width: "80%", margin: "0 auto" }}>
               <Box>
                 <Label htmlFor="m">Height</Label>
-                <Input
-                  name="m"
-                  id="m"
-                  mb={3}
-                  onChange={(e) => setM(e.target.value)}
-                />
+                <Input name="m" id="m" mb={3} type="number" />
               </Box>
               <Box>
                 <Label htmlFor="n">Width</Label>
-                <Input
-                  name="n"
-                  id="n"
-                  mb={3}
-                  onChange={(e) => setN(e.target.value)}
-                />
+                <Input name="n" id="n" mb={3} type="number" />
               </Box>
             </Grid>
             <Button
               sx={{ variant: "buttons.primary", mb: 3 }}
-              onClick={() => setProduct(m * n)}
+              onClick={() => {
+                setM(() => document.getElementById("m").value);
+                setN(() => document.getElementById("n").value);
+              }}
             >
               Create
             </Button>
-            <Grid columns={+n} gap={3} sx={{ width: "80%", margin: "0 auto" }}>
-              {grid.map((boxes, index) => (
-                <button
-                  key={index}
-                  style={{
-                    backgroundColor: addHome[index] ? "green" : "white",
-                    cursor: `url(${cursorUrl}),auto`,
-                  }}
-                  onClick={() => handleClick(index)}
-                >
-                  {addHome[index] ? (
-                    <Image
-                      src={getImgUrl(index)}
-                      alt="icon"
-                      sx={{ width: 30, height: 30, ml: 2 }}
-                    />
-                  ) : (
-                    <Text>{boxes}</Text>
-                  )}
-                </button>
-              ))}
+            <Grid
+              columns={n ? +n : 0}
+              gap={3}
+              sx={{ width: "80%", margin: "0 auto" }}
+            >
+              {addHome &&
+                addHome.length > 0 &&
+                grid?.map((boxes, index) => (
+                  <button
+                    key={index}
+                    style={{
+                      backgroundColor: addHome[Math.floor(index / n)][index % n]
+                        ? "green"
+                        : "white",
+                      cursor: `url(${cursorUrl}),auto`,
+                    }}
+                    onClick={() =>
+                      handleClick(Math.floor(index / n), index % n)
+                    }
+                  >
+                    {addHome[Math.floor(index / n)][index % n] ? (
+                      <Image
+                        src={getImgUrl(Math.floor(index / n), index % n)}
+                        alt="icon"
+                        sx={{ width: 30, height: 30, ml: 2 }}
+                      />
+                    ) : (
+                      <Text>{boxes}</Text>
+                    )}
+                  </button>
+                ))}
             </Grid>
           </Box>
         </CSSTransition>

@@ -12,6 +12,7 @@ function Sidebar({ setCursorUrl }) {
         gap: 10,
         height: "100vh",
         borderTopRightRadius: 25,
+        borderBottomRightRadius: 25,
       }}
     >
       <Button
