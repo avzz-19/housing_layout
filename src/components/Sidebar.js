@@ -8,7 +8,9 @@ function Sidebar({ setCursorUrl }) {
         onClick={() => {
           setCursorUrl("../Home_Icon.svg");
         }}
-        sx={{ "&:hover": { backgroundColor: "lightGreen" } }}
+        sx={{
+          "&:hover": { backgroundColor: "lightGreen" },
+        }}
       >
         <Image
           src="../Home_Icon.svg"
@@ -26,7 +28,9 @@ function Sidebar({ setCursorUrl }) {
         onClick={() => {
           setCursorUrl("../Hospital_Icon.svg");
         }}
-        sx={{ "&:hover": { backgroundColor: "lightGreen" } }}
+        sx={{
+          "&:hover": { backgroundColor: "lightGreen" },
+        }}
       >
         <Image
           src="../Hospital_Icon.svg"
@@ -36,7 +40,9 @@ function Sidebar({ setCursorUrl }) {
         <Text variant="text.h1">Hospital</Text>
       </Button>
       <Button
-        sx={{ "&:hover": { backgroundColor: "lightGreen" } }}
+        sx={{
+          "&:hover": { backgroundColor: "lightGreen" },
+        }}
         onClick={() => {
           setCursorUrl("../Restaurant_Icon.svg");
         }}
@@ -61,7 +67,7 @@ function Sidebar({ setCursorUrl }) {
         />
         <Text variant="text.h1">Gym</Text>
       </Button>
-      <Button sx={styles.button}>Reccommend best house</Button>
+      <Button sx={styles.button}>Recommend best house</Button>
     </Flex>
   );
 }
@@ -76,7 +82,7 @@ const styles = {
     position: "absolute",
     bottom: 40,
     padding: 10,
-    fontSize: 20,
+    fontSize: [12, 14, 18, 22],
     fontWeight: "600",
   },
   container: {
