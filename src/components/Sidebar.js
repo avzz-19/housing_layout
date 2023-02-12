@@ -3,18 +3,7 @@ import { Button, Flex, Image, Text } from "theme-ui";
 
 function Sidebar({ setCursorUrl }) {
   return (
-    <Flex
-      sx={{
-        backgroundColor: "navy",
-        padding: 20,
-        flexDirection: "column",
-        alignItems: "flex-start",
-        gap: 10,
-        height: "100vh",
-        borderTopRightRadius: 25,
-        borderBottomRightRadius: 25,
-      }}
-    >
+    <Flex sx={styles.container}>
       <Button
         onClick={() => {
           setCursorUrl("../Home_Icon.svg");
@@ -72,8 +61,32 @@ function Sidebar({ setCursorUrl }) {
         />
         <Text variant="text.h1">Gym</Text>
       </Button>
+      <Button sx={styles.button}>Reccommend best house</Button>
     </Flex>
   );
 }
 
 export default Sidebar;
+
+const styles = {
+  button: {
+    "&:hover": { backgroundColor: "lightGreen" },
+    backgroundColor: "green",
+    color: "white",
+    position: "absolute",
+    bottom: 40,
+    padding: 10,
+    fontSize: 20,
+    fontWeight: "600",
+  },
+  container: {
+    backgroundColor: "navy",
+    padding: 20,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 10,
+    height: "100vh",
+    borderTopRightRadius: 25,
+    borderBottomRightRadius: 25,
+  },
+};

@@ -19,13 +19,7 @@ function Home() {
     }
     for (let i = 0; i < product; i++) {
       gridArray.push(
-        <div
-          key={i}
-          style={{
-            padding: "10px",
-            color: "black",
-          }}
-        >
+        <div key={i} style={styles.element}>
           {i + 1}
         </div>
       );
@@ -87,15 +81,7 @@ function Home() {
       {!showButton && <Sidebar setCursorUrl={setCursorUrl} />}
       <Box>
         {!showButton && (
-          <Text
-            variant="text.subHeader"
-            sx={{
-              paddingBottom: [1, 2, 3, 4],
-              paddingTop: [1, 2, 3, 4],
-              color: "navy",
-              fontFamily: "roboto",
-            }}
-          >
+          <Text variant="text.subHeader" sx={styles.heading}>
             Define Layout
           </Text>
         )}
@@ -121,15 +107,8 @@ function Home() {
           classNames="move-up"
           mountOnEnter
         >
-          <Box
-            sx={{
-              mt: 20,
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Grid columns={2} sx={{ width: "80%", margin: "0 auto" }}>
+          <Box sx={styles.container}>
+            <Grid columns={2} sx={styles.grid}>
               <Box>
                 <Label htmlFor="m">Height</Label>
                 <Input name="m" id="m" mb={3} type="number" />
@@ -148,11 +127,7 @@ function Home() {
             >
               Create
             </Button>
-            <Grid
-              columns={n ? +n : 0}
-              gap={3}
-              sx={{ width: "80%", margin: "0 auto" }}
-            >
+            <Grid columns={n ? +n : 0} gap={3} sx={styles.grid}>
               {addHome &&
                 addHome.length > 0 &&
                 grid?.map((boxes, index) => (
@@ -160,8 +135,9 @@ function Home() {
                     key={index}
                     style={{
                       backgroundColor: addHome[Math.floor(index / n)][index % n]
-                        ? "green"
+                        ? "mistyRose"
                         : "white",
+                      border: "none",
                       cursor: `url(${cursorUrl}),auto`,
                     }}
                     onClick={() =>
@@ -194,3 +170,23 @@ function Home() {
 }
 
 export default Home;
+
+const styles = {
+  element: {
+    padding: "10px",
+    color: "black",
+  },
+  heading: {
+    paddingBottom: [1, 2, 3, 4],
+    paddingTop: [1, 2, 3, 4],
+    color: "navy",
+    fontFamily: "roboto",
+  },
+  container: {
+    mt: 20,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  grid: { width: "80%", margin: "0 auto" },
+};
