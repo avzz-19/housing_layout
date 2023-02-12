@@ -46,7 +46,6 @@ export const theme = {
   forms: {
     input: {
       height: 50,
-      width: [300, 300, 400, 476],
       borderRadius: 5,
       fontSize: 22,
       fontFamily: "Roboto",
@@ -58,7 +57,7 @@ export const theme = {
     label: {
       fontSize: 24,
       fontWeight: "500",
-      color: "white",
+      color: "navy",
       paddingBottom: 2,
       paddingTop: 4,
     },
@@ -78,10 +77,12 @@ export const theme = {
       fontSize: ["24px", "30px", "32px", "32px"],
       fontWeight: 500,
       lineHeight: ["25px", "34px", "44px", "44px"],
+      color: "navy",
     },
     h2: {
       lineHeight: ["29px", "29px", "36px", "36px"],
       fontSize: ["16px", "20px", "24px", "24px"],
+      color: "navy",
     },
   },
 };
