@@ -45,6 +45,52 @@ function Home() {
   };
 
   console.log(addHome);
+  const findBestHome = (addHome) => {
+    let bestHome = [0, 0];
+    let minDist = Number.MAX_SAFE_INTEGER;
+
+    for (let i = 0; i < addHome.length; i++) {
+      for (let j = 0; j < addHome[0].length; j++) {
+        if (addHome[i][j] === "Home") {
+          let dist = Math.min(
+            getDist(addHome, i, j, "Gym"),
+            getDist(addHome, i, j, "Hospital"),
+            getDist(addHome, i, j, "Restaurant")
+          );
+          if (dist < minDist) {
+            minDist = dist;
+            bestHome = [i, j];
+          }
+        }
+      }
+    }
+    return bestHome;
+  };
+
+  const getDist = (addHome, i, j, facility) => {
+    let dist = Number.MAX_SAFE_INTEGER;
+    for (let row = 0; row < addHome.length; row++) {
+      for (let col = 0; col < addHome[0].length; col++) {
+        if (addHome[row][col] === facility) {
+          dist = Math.min(dist, getManhattanDist(i, j, row, col));
+        }
+      }
+    }
+    return dist;
+  };
+
+  const getManhattanDist = (x1, y1, x2, y2) => {
+    return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+  };
+
+  console.log(findBestHome(addHome));
+
+  const handleRecommendationClick = (bestHome) => {
+    const [rowIndex, colIndex] = bestHome;
+    const updatedMatrix = [...addHome];
+    updatedMatrix[rowIndex][colIndex] = "Best Home";
+    setAddHome(updatedMatrix);
+  };
 
   const getFacility = () => {
     switch (cursorUrl) {
@@ -71,6 +117,8 @@ function Home() {
         return "../Gym_Icon.svg";
       case "Home":
         return "../Home_Icon.svg";
+      case "Best Home":
+        return "../Best_Home.svg";
       default:
         return null;
     }
@@ -126,6 +174,13 @@ function Home() {
               }}
             >
               Create
+            </Button>
+            <Button
+              sx={{ variant: "buttons.primary", mb: 3, ml: 3 }}
+              onClick={() => handleRecommendationClick(findBestHome(addHome))}
+              disabled={addHome.length === 0}
+            >
+              Recommend
             </Button>
             <Grid columns={n ? +n : 0} gap={3} sx={styles.grid}>
               {addHome &&

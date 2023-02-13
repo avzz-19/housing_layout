@@ -67,7 +67,7 @@ function Sidebar({ setCursorUrl }) {
         />
         <Text variant="text.h1">Gym</Text>
       </Button>
-      <Button sx={styles.button}>Recommend best house</Button>
+      {/* <Button sx={styles.button}>Recommend best house</Button> */}
     </Flex>
   );
 }
