@@ -45,27 +45,6 @@ function Home() {
   };
 
   console.log(addHome);
-  const findBestHome = (addHome) => {
-    let bestHome = [0, 0];
-    let minDist = Number.MAX_SAFE_INTEGER;
-
-    for (let i = 0; i < addHome.length; i++) {
-      for (let j = 0; j < addHome[0].length; j++) {
-        if (addHome[i][j] === "Home") {
-          let dist = Math.min(
-            getDist(addHome, i, j, "Gym"),
-            getDist(addHome, i, j, "Hospital"),
-            getDist(addHome, i, j, "Restaurant")
-          );
-          if (dist < minDist) {
-            minDist = dist;
-            bestHome = [i, j];
-          }
-        }
-      }
-    }
-    return bestHome;
-  };
 
   const getDist = (addHome, i, j, facility) => {
     let dist = Number.MAX_SAFE_INTEGER;
@@ -83,19 +62,42 @@ function Home() {
     return Math.abs(x1 - x2) + Math.abs(y1 - y2);
   };
 
+  const findBestHome = (addHome) => {
+    let bestHome = [0, 0];
+    let minAvgDist = Number.MAX_SAFE_INTEGER;
+
+    for (let i = 0; i < addHome.length; i++) {
+      for (let j = 0; j < addHome[0].length; j++) {
+        if (String(addHome[i][j]).startsWith("Home")) {
+          let avgDist =
+            (getDist(addHome, i, j, "Gym") +
+              getDist(addHome, i, j, "Hospital") +
+              getDist(addHome, i, j, "Restaurant")) /
+            3;
+
+          if (avgDist < minAvgDist) {
+            minAvgDist = avgDist;
+            bestHome = [i, j];
+          }
+        }
+      }
+    }
+    return bestHome;
+  };
+
   console.log(findBestHome(addHome));
 
-  const handleRecommendationClick = (bestHome) => {
+  const handleRecommendationClick = (bestHome, value) => {
     const [rowIndex, colIndex] = bestHome;
     const updatedMatrix = [...addHome];
-    updatedMatrix[rowIndex][colIndex] = "Best Home";
+    updatedMatrix[rowIndex][colIndex] = "Best home";
     setAddHome(updatedMatrix);
   };
 
   const getFacility = () => {
     switch (cursorUrl) {
       case "../Home_Icon.svg":
-        return "Home";
+        return "Home" + String(Math.floor(Math.random() * 1000));
       case "../Hospital_Icon.svg":
         return "Hospital";
       case "../Restaurant_Icon.svg":
@@ -108,16 +110,18 @@ function Home() {
     }
   };
   const getImgUrl = (row, col) => {
-    switch (addHome[row][col]) {
+    const value = addHome[row][col];
+    if (value.startsWith("Home")) {
+      return "../Home_Icon.svg";
+    }
+    switch (value) {
       case "Restaurant":
         return "../Restaurant_Icon.svg";
       case "Hospital":
         return "../Hospital_Icon.svg";
       case "Gym":
         return "../Gym_Icon.svg";
-      case "Home":
-        return "../Home_Icon.svg";
-      case "Best Home":
+      case "Best home":
         return "../Best_Home.svg";
       default:
         return null;
@@ -200,11 +204,14 @@ function Home() {
                     }
                   >
                     {addHome[Math.floor(index / n)][index % n] ? (
-                      <Image
-                        src={getImgUrl(Math.floor(index / n), index % n)}
-                        alt="icon"
-                        sx={{ width: 30, height: 30, ml: 2 }}
-                      />
+                      <>
+                        <Image
+                          src={getImgUrl(Math.floor(index / n), index % n)}
+                          alt="icon"
+                          sx={{ width: 30, height: 30, ml: 2 }}
+                        />
+                        <Text>{addHome[Math.floor(index / n)][index % n]}</Text>
+                      </>
                     ) : (
                       <Text>{boxes}</Text>
                     )}
