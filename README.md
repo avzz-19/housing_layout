@@ -7,13 +7,13 @@ services(Restaurant, Gym, Hospital) nearby.
 a. House\
 b. Restaurant\
 c. Gym\
-d. Hospital\
-3. Each House should be added with a unique label to identify it.\
+d. Hospital 
+3. Each House should be added with a unique label to identify it. 
 4. Movement from one plot to adjacent plot can only be done either horizontally or
-vertically.\
+vertically.
 6. A plot will be considered as a distance of 1km while calculating the score for the
-house.\
-7. The UI has a button that recommends the best house to choose.\
+house.
+7. The UI has a button that recommends the best house to choose.
 
 ## Available Scripts
 
